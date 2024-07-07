@@ -79,7 +79,7 @@ export default function HoverButtons({
           className={cn(
             'hover-button rounded-md p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-500 dark:text-gray-400/70 dark:hover:bg-gray-700 dark:hover:text-gray-200 disabled:dark:hover:text-gray-400 md:group-hover:visible md:group-[.final-completion]:visible',
             isCreatedByUser ? '' : 'active',
-            hideEditButton ? 'opacity-0' : '',
+            hideEditButton ? 'opacity-0.6' : '',
             isEditing ? 'active text-gray-700 dark:text-gray-200' : '',
             !isLast ? 'md:opacity-0 md:group-hover:opacity-100' : '',
           )}

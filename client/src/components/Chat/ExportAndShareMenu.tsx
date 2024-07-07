@@ -7,13 +7,16 @@ import HoverToggle from '~/components/Conversations/HoverToggle';
 import useLocalize from '~/hooks/useLocalize';
 import ExportButton from './ExportButton';
 import store from '~/store';
+import { cn } from '~/utils';
 
 export default function ExportAndShareMenu({
   isSharedButtonEnabled,
   className = '',
+  exportButtonClassName = '',
 }: {
   isSharedButtonEnabled: boolean;
   className?: string;
+  exportButtonClassName?: string;
 }) {
   const localize = useLocalize();
 
@@ -27,7 +30,7 @@ export default function ExportAndShareMenu({
     conversation.conversationId !== 'search';
 
   if (!exportable) {
-    return null;
+    return <div className="h-9 w-9" />;
   }
 
   const isActiveConvo = exportable;
@@ -42,17 +45,17 @@ export default function ExportAndShareMenu({
       <DropDownMenu
         icon={<Upload />}
         tooltip={localize('com_endpoint_export_share')}
-        className="pointer-cursor relative z-50 flex h-[40px] min-w-4 flex-none flex-col items-center justify-center rounded-md border border-gray-100 bg-white px-3 text-left hover:bg-gray-50 focus:outline-none focus:ring-0 focus:ring-offset-0 radix-state-open:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 dark:radix-state-open:bg-gray-700 sm:text-sm"
+        className="pointer-cursor relative z-50 flex h-9 w-9 min-w-4 flex-none flex-col items-center justify-center rounded-md bg-white px-3 text-left focus:outline-none focus:ring-0 focus:ring-offset-0 radix-state-open:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 dark:radix-state-open:bg-gray-700 sm:text-sm"
       >
         {conversation && conversation.conversationId && (
           <>
-            <ExportButton conversation={conversation} setPopoverActive={setIsPopoverActive} />
+            <ExportButton className={cn("mb-0", exportButtonClassName)} conversation={conversation} setPopoverActive={setIsPopoverActive} iconSize={18} />
             {isSharedButtonEnabled && (
               <ShareButton
                 conversationId={conversation.conversationId}
                 title={conversation.title ?? ''}
                 appendLabel={true}
-                className="mb-[3.5px]"
+                className="mt-0"
                 setPopoverActive={setIsPopoverActive}
               />
             )}

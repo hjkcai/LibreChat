@@ -81,7 +81,7 @@ export default function ModelSpecsMenu({ modelSpecs }: { modelSpecs: TModelSpec[
     <Root>
       <MenuButton
         selected={selected}
-        className="min-h-11"
+        className="md:min-h-11"
         textClassName="block items-center justify-start text-xs md:text-base whitespace-nowrap max-w-64 overflow-hidden shrink-0 text-ellipsis"
         primaryText={selected?.label ?? ''}
         endpointsConfig={endpointsConfig}
@@ -101,7 +101,7 @@ export default function ModelSpecsMenu({ modelSpecs }: { modelSpecs: TModelSpec[
             <Content
               side="bottom"
               align="start"
-              className="models-scrollbar mt-2 max-h-[65vh] min-w-[340px] max-w-xs overflow-y-auto rounded-lg border border-gray-100 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-700 dark:text-white lg:max-h-[75vh]"
+              className="models-scrollbar mt-2 max-h-[65vh] min-w-[200px] max-w-xs overflow-y-auto rounded-lg border border-gray-100 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-700 dark:text-white lg:max-h-[75vh]"
             >
               <ModelSpecs
                 specs={modelSpecs}

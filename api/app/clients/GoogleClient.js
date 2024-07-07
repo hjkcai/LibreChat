@@ -613,7 +613,7 @@ class GoogleClient extends BaseClient {
           ...clientOptions,
           model,
         },
-        { apiVersion: 'v1beta' },
+        { apiVersion: 'v1beta', baseUrl: process.env.GOOGLE_REVERSE_PROXY },
       );
     }
 

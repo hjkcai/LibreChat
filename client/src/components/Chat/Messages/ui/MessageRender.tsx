@@ -91,7 +91,7 @@ const MessageRender = React.memo(
         )}
         <div className="relative flex flex-shrink-0 flex-col items-end">
           <div>
-            <div className="pt-0.5">
+            <div>
               <div className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-full">
                 <Icon message={msg} conversation={conversation} assistant={assistant} />
               </div>

@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import type { Dispatch, SetStateAction } from 'react';
 import { useLocalize, useNewConvo } from '~/hooks';
 import store from '~/store';
+import { ModelSpecsMenu } from '~/components/Chat/Menus';
+import ExportAndShareMenu from '~/components/Chat/ExportAndShareMenu';
+import { useGetStartupConfig } from 'librechat-data-provider/react-query';
 
 export default function MobileNav({
   setNavVisible,
 }: {
   setNavVisible: Dispatch<SetStateAction<boolean>>;
 }) {
+  const { data: startupConfig } = useGetStartupConfig();
+  const modelSpecs = useMemo(() => startupConfig?.modelSpecs?.list ?? [], [startupConfig]);
   const localize = useLocalize();
   const { newConversation } = useNewConvo(0);
-  const conversation = useRecoilValue(store.conversationByIndex(0));
-  const { title = 'New Chat' } = conversation || {};
 
   return (
     <div className="border-token-border-medium bg-token-main-surface-primary sticky top-0 z-10 flex min-h-[40px] items-center justify-center border-b bg-white pl-1 dark:bg-gray-800 dark:text-white md:hidden md:hidden">
@@ -44,30 +47,14 @@ export default function MobileNav({
           />
         </svg>
       </button>
-      <h1 className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-center text-sm font-normal">
-        {title || localize('com_ui_new_chat')}
+      <h1 className="ml-auto mr-auto overflow-hidden text-ellipsis whitespace-nowrap text-center text-sm font-normal">
+        {modelSpecs?.length > 0 && <ModelSpecsMenu modelSpecs={modelSpecs} />}
       </h1>
-      <button
-        type="button"
-        className="inline-flex h-10 w-10 items-center justify-center rounded-md hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white active:opacity-50 dark:hover:text-white"
-        onClick={() => newConversation()}
-      >
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="icon-md"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M16.7929 2.79289C18.0118 1.57394 19.9882 1.57394 21.2071 2.79289C22.4261 4.01184 22.4261 5.98815 21.2071 7.20711L12.7071 15.7071C12.5196 15.8946 12.2652 16 12 16H9C8.44772 16 8 15.5523 8 15V12C8 11.7348 8.10536 11.4804 8.29289 11.2929L16.7929 2.79289ZM19.7929 4.20711C19.355 3.7692 18.645 3.7692 18.2071 4.2071L10 12.4142V14H11.5858L19.7929 5.79289C20.2308 5.35499 20.2308 4.64501 19.7929 4.20711ZM6 5C5.44772 5 5 5.44771 5 6V18C5 18.5523 5.44772 19 6 19H18C18.5523 19 19 18.5523 19 18V14C19 13.4477 19.4477 13 20 13C20.5523 13 21 13.4477 21 14V18C21 19.6569 19.6569 21 18 21H6C4.34315 21 3 19.6569 3 18V6C3 4.34314 4.34315 3 6 3H10C10.5523 3 11 3.44771 11 4C11 4.55228 10.5523 5 10 5H6Z"
-            fill="currentColor"
-          />
-        </svg>
-      </button>
+      <ExportAndShareMenu
+        isSharedButtonEnabled={startupConfig?.sharedLinksEnabled ?? false}
+        className="pr-1"
+        exportButtonClassName="border-0"
+      />
     </div>
   );
 }

@@ -41,7 +41,7 @@ export default function Message(props: TMessageProps) {
           <div className="final-completion group mx-auto flex flex-1 gap-3 text-base md:max-w-3xl md:px-5 lg:max-w-[40rem] lg:px-1 xl:max-w-[48rem] xl:px-5">
             <div className="relative flex flex-shrink-0 flex-col items-end">
               <div>
-                <div className="pt-0.5">
+                <div>
                   <div className="flex h-6 w-6 items-center justify-center overflow-hidden rounded-full">
                     <Icon message={message} conversation={conversation} />
                   </div>

@@ -32,7 +32,6 @@ const ModelSpecs: FC<{
                   userProvidesKey={spec.authType === AuthType.USER_PROVIDED}
                   endpointsConfig={endpointsConfig}
                 />
-                {i !== specs.length - 1 && <MenuSeparator />}
               </div>
             </Close>
           );

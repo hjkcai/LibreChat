@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import type { ContextType } from '~/common';
 import { useAuthContext, useAssistantsMap, useFileMap, useSearch } from '~/hooks';
 import { AssistantsMapContext, FileMapContext, SearchContext } from '~/Providers';
-import { Nav, MobileNav } from '~/components/Nav';
+import { Nav } from '~/components/Nav';
 
 export default function Root() {
   const { isAuthenticated } = useAuthContext();
@@ -25,11 +25,10 @@ export default function Root() {
     <SearchContext.Provider value={search}>
       <FileMapContext.Provider value={fileMap}>
         <AssistantsMapContext.Provider value={assistantsMap}>
-          <div className="flex h-dvh">
+          <div className="flex h-full">
             <div className="relative z-0 flex h-full w-full overflow-hidden">
               <Nav navVisible={navVisible} setNavVisible={setNavVisible} />
               <div className="relative flex h-full max-w-full flex-1 flex-col overflow-hidden">
-                <MobileNav setNavVisible={setNavVisible} />
                 <Outlet context={{ navVisible, setNavVisible } satisfies ContextType} />
               </div>
             </div>

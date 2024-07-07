@@ -71,7 +71,7 @@ export default function MessageAudio({ index, message, isLast }: THoverButtons) 
         type="button"
         title={isSpeaking ? localize('com_ui_stop') : localize('com_ui_read_aloud')}
       >
-        {renderIcon('19')}
+        {renderIcon('18')}
       </button>
       <audio
         ref={audioRef}

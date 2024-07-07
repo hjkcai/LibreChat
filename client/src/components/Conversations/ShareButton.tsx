@@ -43,7 +43,7 @@ export default function ShareButton({
     if (appendLabel) {
       return (
         <>
-          <Share2Icon className="h-4 w-4" /> {localize('com_ui_share')}
+          <Share2Icon className="icon-md" /> {localize('com_ui_share')}
         </>
       );
     }

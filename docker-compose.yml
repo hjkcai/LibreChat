@@ -5,13 +5,14 @@ version: "3.4"
 
 services:
   api:
-    container_name: LibreChat
+    container_name: librechat
     ports:
       - "${PORT}:${PORT}"
     depends_on:
       - mongodb
       - rag_api
-    image: ghcr.io/danny-avila/librechat-dev:latest
+    build: .
+    image: librechat
     restart: always
     user: "${UID}:${GID}"
     extra_hosts:
@@ -23,18 +24,17 @@ services:
       - RAG_PORT=${RAG_PORT:-8000}
       - RAG_API_URL=http://rag_api:${RAG_PORT:-8000}
     volumes:
-      - type: bind
-        source: ./.env
-        target: /app/.env
-      - ./images:/app/client/public/images
-      - ./logs:/app/api/logs
+      - .env:/app/.env
+      - ./data/librechat.yaml:/app/librechat.yaml
+      - ./data/images:/app/client/public/images
+      - ./data/logs:/app/api/logs
   mongodb:
     container_name: chat-mongodb
     image: mongo
     restart: always
     user: "${UID}:${GID}"
     volumes:
-      - ./data-node:/data/db
+      - ./data/mongo:/data/db
     command: mongod --noauth
   meilisearch:
     container_name: chat-meilisearch
@@ -45,7 +45,7 @@ services:
       - MEILI_HOST=http://meilisearch:7700
       - MEILI_NO_ANALYTICS=true
     volumes:
-      - ./meili_data_v1.7:/meili_data
+      - ./data/meili_data_v1.7:/meili_data
   vectordb:
     container_name: vectordb
     image: ankane/pgvector:latest
@@ -55,7 +55,7 @@ services:
       POSTGRES_PASSWORD: mypassword
     restart: always
     volumes:
-      - pgdata2:/var/lib/postgresql/data
+      - ./data/pgdata2:/var/lib/postgresql/data
   rag_api:
     container_name: rag_api
     image: ghcr.io/danny-avila/librechat-rag-api-dev-lite:latest
@@ -68,5 +68,8 @@ services:
     env_file:
       - .env
 
-volumes:
-  pgdata2:
+networks:
+  default:
+    name: apps
+    external: true
+

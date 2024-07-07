@@ -5,13 +5,18 @@ import type { TConversation } from 'librechat-data-provider';
 import { Upload } from 'lucide-react';
 import { useLocalize } from '~/hooks';
 import { ExportModal } from '../Nav';
+import { cn } from '~/utils';
 
 function ExportButton({
   conversation,
   setPopoverActive,
+  iconSize = 16,
+  className,
 }: {
   conversation: TConversation;
   setPopoverActive: (value: boolean) => void;
+  iconSize?: number;
+  className?: string;
 }) {
   const localize = useLocalize();
 
@@ -30,9 +35,9 @@ function ExportButton({
     <>
       <button
         onClick={clickHandler}
-        className="group m-1.5 flex w-full cursor-pointer items-center gap-2 rounded p-2.5 text-sm hover:bg-gray-200 focus-visible:bg-gray-200 focus-visible:outline-0 radix-disabled:pointer-events-none radix-disabled:opacity-50 dark:hover:bg-gray-600 dark:focus-visible:bg-gray-600"
+        className={cn("group m-1.5 flex w-full cursor-pointer items-center gap-2 rounded p-2.5 text-sm hover:bg-gray-200 focus-visible:bg-gray-200 focus-visible:outline-0 radix-disabled:pointer-events-none radix-disabled:opacity-50 dark:hover:bg-gray-600 dark:focus-visible:bg-gray-600", className)}
       >
-        <Upload size={16} /> {localize('com_nav_export')}
+        <Upload size={iconSize} /> {localize('com_nav_export')}
       </button>
       {showExports && (
         <ExportModal open={showExports} onOpenChange={onOpenChange} conversation={conversation} />

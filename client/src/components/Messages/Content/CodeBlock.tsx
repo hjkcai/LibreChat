@@ -28,7 +28,7 @@ const CodeBar: React.FC<CodeBarProps> = React.memo(({ lang, codeRef, error, plug
         <InfoIcon className="ml-auto flex h-4 w-4 gap-2 text-white/50" />
       ) : (
         <button
-          className={cn('ml-auto flex gap-2', error ? 'h-4 w-4 items-start text-white/50' : '')}
+          className={cn('ml-auto flex gap-2 items-center', error ? 'h-4 w-4 items-start text-white/50' : '')}
           onClick={async () => {
             const codeString = codeRef.current?.textContent;
             if (codeString) {
@@ -42,15 +42,9 @@ const CodeBar: React.FC<CodeBarProps> = React.memo(({ lang, codeRef, error, plug
           }}
         >
           {isCopied ? (
-            <>
               <CheckMark className="h-[18px] w-[18px]" />
-              {error ? '' : localize('com_ui_copied')}
-            </>
           ) : (
-            <>
               <Clipboard />
-              {error ? '' : localize('com_ui_copy_code')}
-            </>
           )}
         </button>
       )}
@@ -69,13 +63,13 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   const language = plugin || error ? 'json' : lang;
 
   return (
-    <div className="w-full rounded-md bg-gray-900 text-xs text-white/80">
+    <div className="w-full rounded-md text-xs text-white/80" style={{ background: '#2e3440' }}>
       <CodeBar lang={lang} codeRef={codeRef} plugin={!!plugin} error={error} />
       <div className={cn(classProp, 'overflow-y-auto p-4')}>
         <code
           ref={codeRef}
           className={cn(
-            plugin || error ? '!whitespace-pre-wrap' : `hljs language-${language} !whitespace-pre`,
+            plugin || error ? '!whitespace-pre-wrap' : `hljs language-${language} theme-nord !whitespace-pre`,
           )}
         >
           {codeChildren}
